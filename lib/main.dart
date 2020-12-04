@@ -1,3 +1,4 @@
+import 'package:chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,11 +13,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp().whenComplete(() {
-      FirebaseFirestore.instance
-          .collection('mensagens')
-          .doc()
-          .set({'texto': 'daniel', 'read': false, 'from': 'Daniel'});
+    Firebase.initializeApp().whenComplete(() async {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('mensagens').doc('2Q5zJqt46yDvrB0wBhf7').get();
+      print(snapshot.data());
     });
     print('xxxx');
     return MaterialApp(
@@ -36,8 +35,11 @@ class MyApp extends StatelessWidget {
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        iconTheme: IconThemeData(
+          color: Colors.blue
+        )
       ),
-      home: Container(),
+      home: ChatScreen(),
     );
   }
 }
